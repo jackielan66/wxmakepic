@@ -5,7 +5,7 @@ var express = require('express');
 var app = express();
 
 let url = 
-`https://mp.weixin.qq.com/s?__biz=MzIyMzcwMzU4Ng==&mid=2247507837&idx=5&sn=42c8b3a3ea0718587359f26da1180b18&chksm=e818b830df6f312679e30527ad7760e651bae09bec9c95e0b88c6d8d043dd0296a0f3325990c`
+`https://mp.weixin.qq.com/s?__biz=MzU1NzAyMTcwMg==&mid=2247527645&idx=1&sn=2c3cbede882c8cf6d72493190dc3658e&chksm=fc3e03b4cb498aa2db025fdc944cb95e3198918c15f017a9cb285a78e201f1b9efb1cafe47c5`
 
 app.engine('html', require('express-art-template'));
 app.set('view options', {
@@ -16,7 +16,9 @@ app.set('view engine', 'art');
 
 
 // 
-let isTrimArray = false; // 数组是否去头尾 
+let isTrimArray = true; // 数组是否去头尾 
+
+let index = -1;
 
 app.use('/', (req, wrapres, next) => {
     let returnArr = [];
@@ -33,6 +35,9 @@ app.use('/', (req, wrapres, next) => {
             if(isTrimArray){
                 returnArr.shift();
                 returnArr.pop()
+            }
+            if(index > -1){
+                returnArr = [returnArr[index]]
             }
             // console.log(chunk(returnArr,3),"$")
             wrapres.render('template.html', {
